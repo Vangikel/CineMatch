@@ -29,3 +29,49 @@ Onde os usuários podem encontrar ajuda sobre o projeto
 Para obter ajuda, os usuários podem:
 
 Consultar a documentação: Dentro do repositório do projeto, haverá uma documentação técnica detalhada explicando como usar as funcionalidades e resolver problemas comuns.
+
+Coleção usuarios
+Atributos:
+usuario_id (chave primária)
+nome
+email
+senha
+Coleção filmes
+Atributos:
+filme_id (chave primária)
+titulo
+genero
+ano
+
+Coleção avaliacoes
+Atributos:
+avaliacao_id (chave primária)
+usuario_id (chave estrangeira para usuarios)
+filme_id (chave estrangeira para filmes)
+nota (de 1 a 10)
+
+Relacionamento Entre as Coleções:
+Relacionamento usuarios - avaliacoes:
+Tipo de relacionamento: Um para muitos (um usuário pode ter várias avaliações).
+Chave de relacionamento: O campo usuario_id na coleção avaliacoes faz referência ao campo usuario_id na coleção usuarios.
+Relacionamento filmes - avaliacoes:
+Tipo de relacionamento: Um para muitos (um filme pode ter várias avaliações).
+Chave de relacionamento: O campo filme_id na coleção avaliacoes faz referência ao campo filme_id na coleção filmes.
+Diagrama de Relações
+
+   usuarios              avaliacoes                filmes
++--------------+       +-------------+         +------------+
+| usuario_id   | <-----| usuario_id  |         | filme_id   |
+| nome         |       | filme_id    |-------->| titulo     |
+| email        |       | nota        |         | genero     |
+| senha        |       +-------------+         | ano        |
++--------------+                               +------------+
+
+Relação Chave-Valor:
+Na coleção avaliacoes, o usuario_id é uma chave que mapeia para o usuario_id na coleção usuarios. O filme_id é uma chave que mapeia para o filme_id na coleção filmes.
+Isso cria uma hierarquia onde as avaliações referenciam tanto os usuários que as fizeram quanto os filmes que foram avaliados.
+Explicação da Hierarquia Chave-Valor:
+Chave-Valor entre coleções:
+Na coleção avaliacoes, os campos usuario_id e filme_id são as chaves que associam a coleção avaliacoes com as coleções usuarios e filmes. Os valores associados a essas chaves são os IDs de usuário e de filme.
+
+
