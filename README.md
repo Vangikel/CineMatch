@@ -49,6 +49,12 @@ Para obter ajuda, os usuários podem:
   - `filme_id` (chave estrangeira para `filmes`)
   - `nota` (de 1 a 10)
 
+### Coleção `generos`
+- **Atributos**:
+  - `genero_id` (chave primária)
+  - `nome`
+
+
 ---
 
 ## Relacionamento Entre as Coleções
