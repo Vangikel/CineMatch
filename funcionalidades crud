@@ -1,0 +1,66 @@
+---CREATE
+
+usuarios_collection.insert_one({
+    "usuario_id": "uuid_generate()",  # Substitua com um método para gerar IDs únicos
+    "nome": "Nome do Usuário",
+    "email": "usuario@example.com",
+    "senha": "password"
+})
+
+filmes_collection.insert_one({
+    "filme_id": "uuid_generate()",
+    "titulo": "Título do Filme",
+    "genero": "Ação",
+    "ano": 2023
+})
+
+avaliacoes_collection.insert_one({
+    "avaliacao_id": "uuid_generate()",
+    "usuario_id": "id_do_usuario",
+    "filme_id": "id_do_filme",
+    "nota": 8
+})
+
+generos_collection.insert_one({
+    "genero_id": "uuid_generate()",
+    "nome": "Nome do genero",
+
+---READ
+
+usuario = usuarios_collection.find_one({"usuario_id": "id_do_usuario"})
+
+filme = filmes_collection.find_one({"filme_id": "id_do_filme"})
+
+avaliacao = avaliacoes_collection.find_one({"avaliacao_id": "id_da_avaliacao"})
+
+genero = generos_collection.find_one({"genero_id": "id_do_genero"})
+
+---UPDATE
+
+usuarios_collection.update_one(
+    {"usuario_id": "id_do_usuario"},
+    {"$set": {"nome": "Novo Nome"}}
+)
+
+filmes_collection.update_one(
+    {"filme_id": "id_do_filme"},
+    {"$set": {"titulo": "Novo Título"}}
+)
+
+avaliacoes_collection.update_one(
+    {"avaliacao_id": "id_da_avaliacao"},
+    {"$set": {"nota": 9}}
+)
+
+generos_collection.update_one(
+    {"genero_id": "id_do_genero"},
+    {"$set": {"nome": Suspense}}
+)
+
+
+---DELETE
+
+usuarios_collection.delete_one({"usuario_id": "id_do_usuario"})
+filmes_collection.delete_one({"filme_id": "id_do_filme"})
+avaliacoes_collection.delete_one({"avaliacao_id": "id_da_avaliacao"})
+generos_collection.delete_one({"genero_id": "id_do_genero"})
