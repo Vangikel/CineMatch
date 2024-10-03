@@ -208,13 +208,17 @@ def deletar_avaliacao(avaliacao_id: str):
         raise HTTPException(status_code=404, detail="Avaliação não encontrada")
     return {"message": "Avaliação deletada com sucesso"}
 
-# Exemplo de Aggregation Pipeline para Recomendações
 @app.get("/recomendacoes/{usuario_id}")
 def recomendacoes(usuario_id: str):
     pipeline = [
         {
             "$match": {
                 "usuario_id": usuario_id
+            }
+        },
+        {
+            "$addFields": {
+                "filme_id": {"$toObjectId": "$filme_id"}  # Converte filme_id para ObjectId
             }
         },
         {
