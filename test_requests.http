@@ -1,0 +1,114 @@
+# Criar Usuário
+POST http://127.0.0.1:8000/usuarios/
+Content-Type: application/json
+
+{
+    "nome": "João",
+    "email": "joao@example.com",
+    "senha": "senha123"
+}
+
+# Listar Usuários
+GET http://127.0.0.1:8000/usuarios/
+
+# Ler Usuário
+GET http://127.0.0.1:8000/usuarios/{usuario_id}
+
+# Atualizar Usuário
+PUT http://127.0.0.1:8000/usuarios/{usuario_id}
+Content-Type: application/json
+
+{
+    "nome": "João Atualizado",
+    "email": "joao_atualizado@example.com",
+    "senha": "nova_senha123"
+}
+
+# Deletar Usuário
+DELETE http://127.0.0.1:8000/usuarios/{usuario_id}
+
+# Criar Filme
+POST http://127.0.0.1:8000/filmes/
+Content-Type: application/json
+
+{
+    "titulo": "O Poderoso Chefão",
+    "genero": "Crime",
+    "ano": 1972
+}
+
+# Listar Filmes
+GET http://127.0.0.1:8000/filmes/
+
+# Ler Filme
+GET http://127.0.0.1:8000/filmes/{filme_id}
+
+# Atualizar Filme
+PUT http://127.0.0.1:8000/filmes/{filme_id}
+Content-Type: application/json
+
+{
+    "titulo": "O Poderoso Chefão - Parte II",
+    "genero": "Crime",
+    "ano": 1974
+}
+
+# Deletar Filme
+DELETE http://127.0.0.1:8000/filmes/{filme_id}
+
+# Criar Gênero
+POST http://127.0.0.1:8000/generos/
+Content-Type: application/json
+
+{
+    "nome": "Drama"
+}
+
+# Listar Gêneros
+GET http://127.0.0.1:8000/generos/
+
+# Ler Gênero
+GET http://127.0.0.1:8000/generos/{genero_id}
+
+# Atualizar Gênero
+PUT http://127.0.0.1:8000/generos/{genero_id}
+Content-Type: application/json
+
+{
+    "nome": "Drama Atualizado"
+}
+
+# Deletar Gênero
+DELETE http://127.0.0.1:8000/generos/{genero_id}
+
+# Criar Avaliação
+POST http://127.0.0.1:8000/avaliacoes/
+Content-Type: application/json
+
+{
+    "usuario_id": "{usuario_id}",
+    "filme_id": "{filme_id}",
+    "nota": 9
+}
+
+# Listar Avaliações
+GET http://127.0.0.1:8000/avaliacoes/
+
+# Ler Avaliação
+GET http://127.0.0.1:8000/avaliacoes/{avaliacao_id}
+
+# Atualizar Avaliação
+PUT http://127.0.0.1:8000/avaliacoes/{avaliacao_id}
+Content-Type: application/json
+
+{
+    "usuario_id": "{usuario_id}",
+    "filme_id": "{filme_id}",
+    "nota": 10
+}
+
+# Deletar Avaliação
+DELETE http://127.0.0.1:8000/avaliacoes/{avaliacao_id}
+
+# testar o aggregation pipeline
+GET http://127.0.0.1:8000/recomendacoes/66fc1ddbc10090512534e33a
