@@ -1,4 +1,4 @@
-import streamlit as st
+'''import streamlit as st
 import requests  # Para realizar chamadas à API
 import matplotlib.pyplot as plt
 
@@ -123,5 +123,137 @@ def run():
 # Chame a função run() se este arquivo for executado diretamente
 if __name__ == "__main__":
     run()
+'''
 
+import streamlit as st
+import requests
+import matplotlib.pyplot as plt
+
+def run():
+    # Estilos criativos
+    st.markdown(
+        """
+        <style>
+        .stApp {
+            background-image: url('assets/background.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        h1 {
+            font-family: 'Lobster', cursive;
+            color: #ffcc00;
+            text-align: center;
+            font-size: 4em;
+            margin-top: 20px;
+            animation: bounceIn 2s;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+        h2 {
+            font-family: 'Roboto', sans-serif;
+            color: #ffffff;
+            text-align: center;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            transition: transform 0.2s ease;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .custom-button {
+            background-color: #ffcc00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .custom-button:hover {
+            background-color: #ff9900;
+        }
+        .widget-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
+        </style>
+        <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.title("Bem-vindo ao CineMatch!")
+
+    st.subheader("Sua plataforma de gerenciamento de filmes")
+
+    # Layout de colunas com animação de hover
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.image("assets/cinema.jpg", use_column_width=True, caption="Encontre os melhores filmes aqui!")
+        
+    with col2:
+        st.write(""" 
+        O CineMatch é uma aplicação que permite que você gerencie seus filmes, gêneros e avaliações de forma inovadora.
+        """)
+
+        # Botões personalizados com hover
+        if st.button('🎥 Ver Filmes', key="btn_filmes", help="Clique para explorar os filmes"):
+            st.write("Explorando filmes...")
+
+    st.markdown("---")
+
+    # Cartões com hover e informações dinâmicas
+    st.markdown("## Recomendados para Você")
+    with st.container():
+        st.markdown("""
+        <div class="card">
+            <h3>🎬 Título do Filme</h3>
+            <p>Gênero: Ação</p>
+            <p>Ano: 2022</p>
+            <p>Sinopse: Um filme cheio de ação e adrenalina.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Widgets interativos
+    st.markdown("## Descubra:")
+    with st.container():
+        st.text_input("🔍 Pesquise por filmes...")
+
+    # Layout de gráficos e estatísticas
+    st.markdown("---")
+    st.markdown("## Estatísticas de Avaliações")
+
+    filmes = ['Filme A', 'Filme B', 'Filme C']
+    notas = [8, 7, 9]
+
+    fig, ax = plt.subplots()
+    ax.bar(filmes, notas, color=['#FFCC00', '#FF9900', '#FF6600'])
+    plt.xlabel('Filmes')
+    plt.ylabel('Notas')
+    plt.title('Avaliações Recentes')
+    st.pyplot(fig)
+
+    # Carrossel de filmes (simulado)
+    st.markdown("## 📽️ Em Alta")
+    st.image(['assets/filme1.jpg', 'assets/filme2.jpg', 'assets/filme3.jpg'], use_column_width=True)
+
+# Chame a função run() se este arquivo for executado diretamente
+if __name__ == "__main__":
+    run()
 
