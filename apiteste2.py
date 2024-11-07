@@ -3,10 +3,15 @@ from pydantic import BaseModel
 from pymongo import MongoClient
 from bson import ObjectId
 from typing import List
+from redis import Redis
+import os
 
 app = FastAPI()
 client = MongoClient("mongodb+srv://ibituruna:b2b76kYJxKQ7ePiw@cinecluster.nrwz4.mongodb.net/")
 db = client["cinecluster"]
+
+# Conexão com Redis
+redis = Redis.from_url("redis://default:VOSH6t7r4AJ3tRMSY9LkSS2CW389Vw2I@redis-15202.c308.sa-east-1-1.ec2.redns.redis-cloud.com:15202")
 
 # Coleções
 usuarios_collection = db["usuarios"]
@@ -241,3 +246,46 @@ def recomendacoes(usuario_id: str):
     ]
     resultado = list(avaliacoes_collection.aggregate(pipeline))
     return resultado
+
+# Teste de conexão com Redis
+@app.get("/test_redis")
+async def test_redis():
+    try:
+        # Testa set e get simples
+        redis.set("test_key", "Conexão com Redis bem-sucedida!")
+        value = redis.get("test_key").decode("utf-8")
+        return {"message": value}
+    except Exception as e:
+        return {"error": str(e)}
+
+# Modelos de Dados
+class Filme(BaseModel):
+    titulo: str
+    genero: str
+    ano: int
+
+# Exemplo de armazenamento de recomendações usando Set
+@app.post("/recomendacoes/{usuario_id}/filme/{filme_id}")
+def recomendar_filme(usuario_id: str, filme_id: str):
+    # Armazena no Set de recomendações do usuário
+    redis_client.sadd(f"recomendacoes:{usuario_id}", filme_id)
+    return {"message": "Filme recomendado com sucesso"}
+
+# Exemplo de visualização de recomendações do usuário
+@app.get("/recomendacoes/{usuario_id}", response_model=List[str])
+def obter_recomendacoes(usuario_id: str):
+    filmes = redis_client.smembers(f"recomendacoes:{usuario_id}")
+    return list(filmes)
+
+# Contador de visualizações usando Hash
+@app.post("/filme/{filme_id}/visualizar")
+def visualizar_filme(filme_id: str, usuario_id: str):
+    # Incrementa contador de visualizações do usuário para o filme
+    redis_client.hincrby(f"visualizacoes:{usuario_id}", filme_id, 1)
+    return {"message": f"Visualização de filme {filme_id} registrada para usuário {usuario_id}"}
+
+# Exemplo de recuperação de contagem de visualizações
+@app.get("/filme/{filme_id}/visualizacoes/{usuario_id}")
+def contar_visualizacoes(filme_id: str, usuario_id: str):
+    visualizacoes = redis_client.hget(f"visualizacoes:{usuario_id}", filme_id)
+    return {"filme_id": filme_id, "visualizacoes": int(visualizacoes) if visualizacoes else 0}
